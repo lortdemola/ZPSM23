@@ -34,6 +34,7 @@ import Conn from './navigation/ChatSrc';
 import Colors from './constants/Colors';
 import BTabNav from './navigation/BTabNav';
 import ChatRoomScreen from './navigation/ChatRoom';
+import Contacts from './navigation/Contacts';
 
 
 const App = () => {
@@ -67,6 +68,7 @@ const App = () => {
       ),
       }} />
       <stack.Screen name="Connection" component={Conn}/>
+      <stack.Screen name="Contacts" component={Contacts}/>
       <stack.Screen name="Chatroom" component={ChatRoomScreen}options={({route})=>({
       title: route.params.name,
       headerRight:()=>(

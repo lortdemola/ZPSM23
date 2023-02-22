@@ -1,24 +1,24 @@
 import React, {Component  ,useEffect, useState  } from 'react';
 import {ActivityIndicator,StyleSheet, FlatList,SafeAreaView,ScrollView,View, Text} from 'react-native'
-import ListItemComponent from './Additional/ListItemComponent';
-import chatRooms from '../data/ChatRooms';
+import ListItemContacts from './Additional/ListItemContacts';
+import Users from '../data/Users';
 import FlotBTN from './Additional/FlotBTN';
 
 
 
 
-const Conn = ({ navigation }) => {
+const Contacts = ({ navigation }) => {
    
     
     return (
         <View style={styles.container} >
             <FlatList 
             style={{width:'100%'}}
-            data={chatRooms} 
-            renderItem={({item})=> <ListItemComponent chatRoom={item}/>}
+            data={Users} 
+            renderItem={({item})=> <ListItemContacts user={item}/>}
             keyExtractor={(item)=>item.id}
             />
-           <FlotBTN/>
+           
         </View>
     )
        
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
         
     },
     });
-   export default Conn
+   export default Contacts
 
 //
