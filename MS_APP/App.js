@@ -30,10 +30,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import Device from './navigation/DEVICE';
-import Conn from './navigation/CONN';
+import Conn from './navigation/ChatSrc';
 import Colors from './constants/Colors';
 import BTabNav from './navigation/BTabNav';
-
+import ChatRoomScreen from './navigation/ChatRoom';
 
 
 const App = () => {
@@ -60,13 +60,23 @@ const App = () => {
       
       <stack.Screen name="Devices" component={BTabNav}  options={{title: "WhatsApp",
       headerRight:()=>(
-        <View style={{flexDirection:'row',width:60,justifyContent:'space-between',marginRight:10}}>
+        <View style={{flexDirection:'row',width:60,justifyContent:'space-between',marginRight:15}}>
           <Icon name="search" size={22} color={Colors.light.backGround} />
           <Icon name="list-ul" size={22} color={Colors.light.backGround} />
         </View>
       ),
       }} />
       <stack.Screen name="Connection" component={Conn}/>
+      <stack.Screen name="Chatroom" component={ChatRoomScreen}options={({route})=>({
+      title: route.params.name,
+      headerRight:()=>(
+        <View style={{flexDirection:'row',width:100,justifyContent:'space-between',marginRight:15}}>
+          <Icon name="video-camera" size={22} color={Colors.light.backGround} />
+          <Icon name="phone" size={22} color={Colors.light.backGround} />
+          <Icon name="list-ul" size={22} color={Colors.light.backGround} />
+        </View>
+      ),
+      })}/>
     </stack.Navigator>
     </NavigationContainer>
   );

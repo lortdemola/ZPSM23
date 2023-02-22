@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import React, { useEffect, useState }  from 'react'
 import {ActivityIndicator,FlatList,View, Text, TouchableOpacity,Dimensions,StyleSheet, Linking, ScrollView, Button} from 'react-native';
-import Result from './CONN';
+import Result from './ChatSrc';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 const Device = ({ navigation }) => {

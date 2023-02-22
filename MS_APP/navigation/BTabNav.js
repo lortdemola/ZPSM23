@@ -4,7 +4,7 @@ import {View, Text,TouchableOpacity,StyleSheet,Image} from 'react-native';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Device from './DEVICE';
-import Conn from './CONN';
+import Conn from './ChatSrc';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
