@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -35,16 +35,60 @@ import Colors from './constants/Colors';
 import BTabNav from './navigation/BTabNav';
 import ChatRoomScreen from './navigation/ChatRoom';
 import Contacts from './navigation/Contacts';
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth,API, graphqlOperation } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 import {withAuthenticator} from'aws-amplify-react-native'
 Amplify.configure(awsconfig);
-
+import { getTodo } from './src/graphql/queries';
+import { createTodo } from './src/graphql/mutations';
+const randomIMG =[
+  'https://loremflickr.com/320/240/dog',
+  'https://loremflickr.com/320/240/brazil,rio',
+  'https://loremflickr.com/320/240'
+]
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
- 
+ const getrandomIMG =()=>{
+  return randomIMG[Math.floor(Math.random()* randomIMG.length)];
+
+ }
   const stack = createStackNavigator();
+
+  useEffect(()=>{ 
+    const fetchUser = async()=>{
+       //
+       const  userInfo = await Auth.currentAuthenticatedUser({bypassCache:true});
+       console.warn(userInfo);
+       if(userInfo){
+        const userData = await API.graphql(graphqlOperation(
+          getTodo,
+          {id:userInfo.attributes.sub}
+          ));
+          if(userData.data.getTodo){
+            return;
+          }else{
+            const newUser = {
+              id:userInfo.attributes.sub,
+              name: userInfo.username,
+              imageUri: getrandomIMG(),
+              status:'i am on NonSpace',
+            }
+            await API.graphql(
+              graphqlOperation(
+                createTodo,
+                {input:newUser}
+              )
+            )
+          }
+          console.log(userInfo);
+       }
+    }
+    fetchUser();
+  },[])
+
+
+
   return (
     <NavigationContainer>
     <stack.Navigator screenOptions={{
