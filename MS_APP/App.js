@@ -35,7 +35,10 @@ import Colors from './constants/Colors';
 import BTabNav from './navigation/BTabNav';
 import ChatRoomScreen from './navigation/ChatRoom';
 import Contacts from './navigation/Contacts';
+import { Amplify } from 'aws-amplify';
+import awsconfig from './src/aws-exports';
 
+Amplify.configure(awsconfig);
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
