@@ -10,6 +10,11 @@
       "StackName": "amplify-msapp-dev-122605",
       "StackId": "arn:aws:cloudformation:eu-central-1:718878078423:stack/amplify-msapp-dev-122605/deaf1750-b36c-11ed-8aa3-027fd71a2a02",
       "AmplifyAppId": "d2r6usri5ccn5j"
+    },
+    "categories": {
+      "auth": {
+        "msapp8aa97dd7": {}
+      }
     }
   }
 }
