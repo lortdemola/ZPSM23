@@ -1,7 +1,7 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "msapp",
+    "apiName": "umesseges",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",

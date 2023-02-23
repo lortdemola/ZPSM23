@@ -3,6 +3,8 @@ import React, {Component  ,useEffect, useState  } from 'react';
 import {TouchableWithoutFeedback,StyleSheet, FlatList,SafeAreaView,View, Text,Image} from 'react-native'
 import { User } from '../../types';
 import { useNavigation } from '@react-navigation/native';
+import { API, graphqlOperation,Auth } from 'aws-amplify';
+import { createChatRoom,createChatRoomUser } from '../../src/graphql/mutations';
 export type chatlistprops={
  user: User;
 }
@@ -12,8 +14,40 @@ const ListItemContacts=( props:chatlistprops)=>{
     const{user} =props;
     
     const navigation = useNavigation();
-    const onClick = ()=>{
-        //nav to chat w itch user
+    const onClick = async ()=>{
+        try {
+            const newchatRoomData = await API.graphql(
+                graphqlOperation(
+                    createChatRoom,{
+                        input:{}
+                    }
+            ));
+            if(!newchatRoomData.data){
+                console.warn("fail to crate chat room")
+                return;
+            }
+            const newchatRoom = newchatRoomData.data.createChatRoom;
+            const newchatRoomUser = await API.graphql(
+                graphqlOperation(
+                    createChatRoomUser,{input:{
+                        userID:user.id,
+                        chatRoomID:newchatRoom.id
+                    }}
+            ));
+            const userinfo = await Auth.currentAuthenticatedUser();
+            console.log(userinfo.attributes.sub);
+            await API.graphql(
+                graphqlOperation(
+                    createChatRoomUser,{input:{
+                        userID:userinfo.attributes.sub,
+                        chatRoomID:newchatRoom.id
+                    }}
+            ));
+            navigation.navigate('Chatroom', {id:newchatRoom.id,name:user.name});
+        } catch (error) {
+            console.warn(error);
+        }
+        
     }
     return(
         <TouchableWithoutFeedback onPress={onClick}>

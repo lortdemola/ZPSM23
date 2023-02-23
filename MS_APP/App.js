@@ -57,9 +57,9 @@ const App = () => {
 
   useEffect(()=>{ 
     const fetchUser = async()=>{
-       //
+      
        const  userInfo = await Auth.currentAuthenticatedUser({bypassCache:true});
-       console.warn(userInfo);
+       
        if(userInfo){
         const userData = await API.graphql(graphqlOperation(
           getTodo,
@@ -106,7 +106,7 @@ const App = () => {
       
     }}>
       
-      <stack.Screen name="Devices" component={BTabNav}  options={{title: "WhatsApp",
+      <stack.Screen name="Devices" component={BTabNav}  options={{title: "NonSpace",
       headerRight:()=>(
         <View style={{flexDirection:'row',width:60,justifyContent:'space-between',marginRight:15}}>
           <Icon name="search" size={22} color={Colors.light.backGround} />

@@ -13,7 +13,6 @@ const InputBox =()=>{
         console.warn('onMicPress');
     }
     const onSendPress=()=>{
-        console.warn('Sending: '+message);
         setmessage('');
     }
     const onPress = ()=>{

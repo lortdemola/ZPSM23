@@ -19,12 +19,14 @@ const Contacts = ({ navigation }) => {
                 listTodos
   
             ))
+            
             setusers(usersData.data.listTodos.items)
           } catch (error) {
-            console.warn(e);
+            console.warn(error);
           }
         }
         fetchUsers();
+         
       },[])
     return (
         <View style={styles.container} >

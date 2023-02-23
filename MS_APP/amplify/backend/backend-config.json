@@ -1,6 +1,6 @@
 {
   "api": {
-    "msapp": {
+    "umesseges": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "msapp8aa97dd7": {
+    "umessegesec4f94e3": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
