@@ -5,6 +5,8 @@ import ChatRoomsData from '../data/Chats';
 import  ChatMessage  from './Additional/ChatMessage';
 import galaxy from '../constants/icons/galaxy.jpg'
 import InputBox from './Additional/InputBox';
+
+
 const ChatRoomScreen = ()=>{
     
     const route = useRoute();

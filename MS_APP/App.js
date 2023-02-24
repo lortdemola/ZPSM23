@@ -81,7 +81,7 @@ const App = () => {
               )
             )
           }
-          console.log(userInfo);
+          
        }
     }
     fetchUser();

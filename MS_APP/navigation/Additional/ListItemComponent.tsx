@@ -3,6 +3,8 @@ import React, {Component  ,useEffect, useState  } from 'react';
 import {TouchableWithoutFeedback,StyleSheet, FlatList,SafeAreaView,View, Text,Image} from 'react-native'
 import { ChatRoom } from '../../types';
 import { useNavigation } from '@react-navigation/native';
+
+import { API, graphqlOperation,Auth } from 'aws-amplify';
 export type chatlistprops={
  chatRoom: ChatRoom;
 }
@@ -10,7 +12,27 @@ export type chatlistprops={
 const ListItemComponent=( props:chatlistprops)=>{
 
     const{chatRoom} =props;
-    const user = chatRoom.users[1];
+    const[userA,setuserA] = useState([]);
+    const  userInfo =  Auth.currentAuthenticatedUser();
+    useEffect(()=>{
+        const fetchChats=async()=>{
+            try {
+            const  userInfo = await Auth.currentAuthenticatedUser();
+                
+            if(chatRoom.chatRoomUsers.items[0].user.id == userInfo.attributes.sub ){
+                setuserA(chatRoom.chatRoomUsers.items[1].user);
+            }else{
+                setuserA(chatRoom.chatRoomUsers.items[0].user);
+            }
+        
+            } catch (error) {
+                console.warn(error);
+            }
+        }
+        fetchChats();
+     },[]) 
+     const user = userA;
+
     const navigation = useNavigation();
     const onClick = ()=>{
         navigation.navigate('Chatroom', {id:chatRoom.id,name:user.name});
@@ -22,10 +44,10 @@ const ListItemComponent=( props:chatlistprops)=>{
                 <Image source={{uri: user.imageUri}} style={styles.avatar}/>
                 <View style={styles.midcontainer}>
                     <Text style={styles.Usname}>{user.name}</Text>
-                    <Text style={styles.LMessage}>{chatRoom.lastMessage.content}</Text>
+                    <Text style={styles.LMessage}>{chatRoom.lastMessage ? chatRoom.lastMessage.content:""}</Text>
                 </View>
             </View>
-            <Text style={styles.time}>{moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}</Text>
+            <Text style={styles.time}>{ chatRoom.lastMessage && moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}</Text>
         </View>
         </TouchableWithoutFeedback>
     )

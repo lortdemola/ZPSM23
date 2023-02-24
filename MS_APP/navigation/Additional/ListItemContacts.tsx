@@ -5,17 +5,66 @@ import { User } from '../../types';
 import { useNavigation } from '@react-navigation/native';
 import { API, graphqlOperation,Auth } from 'aws-amplify';
 import { createChatRoom,createChatRoomUser } from '../../src/graphql/mutations';
+import { getChatRoom} from '../../src/graphql/queries';
+import { getTodo } from './queries';
 export type chatlistprops={
  user: User;
 }
 
 const ListItemContacts=( props:chatlistprops)=>{
 
+    const [ChatusersID,setChatusersID] = useState([]);
+    const [chatRooms,setchatRooms] = useState([]);
+    const [t,sett] = useState(false);
     const{user} =props;
+    useEffect(()=>{
+        const ifExist=async()=>{
+            try {
+                const  userInfo = await Auth.currentAuthenticatedUser({bypassCache:true});
+                
+            if(userInfo){
+            const userData = await API.graphql(graphqlOperation(
+            getTodo,
+            {id:userInfo.attributes.sub}
+            ));
+            
+            if(userData.data.getTodo){
+                setchatRooms(userData.data.getTodo.chatRoomUser.items);
+                
+            }
+            
+            }
+            } catch (error) {
+                console.warn(error);
+            }
+        }
+        ifExist();
+     },[]) 
     
     const navigation = useNavigation();
     const onClick = async ()=>{
+    
+        var tr = false;
         try {
+            
+            for (let index = 0; index < chatRooms.length; index++) {
+                const element = chatRooms[index].chatRoom.chatRoomUsers.items;
+                for (let ind = 0; ind< element.length; ind++) {
+                    if(user.id == element[ind].user.id){
+                        tr = true;
+                    }
+                }
+                
+                
+            }
+            
+        
+            
+                
+            
+        
+        if(!tr)
+        {
             const newchatRoomData = await API.graphql(
                 graphqlOperation(
                     createChatRoom,{
@@ -44,11 +93,14 @@ const ListItemContacts=( props:chatlistprops)=>{
                     }}
             ));
             navigation.navigate('Chatroom', {id:newchatRoom.id,name:user.name});
+        }
         } catch (error) {
             console.warn(error);
         }
-        
     }
+        
+    
+
     return(
         <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
