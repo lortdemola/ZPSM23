@@ -3,7 +3,7 @@ import React, {Component  ,useEffect, useState  } from 'react';
 import {ActivityIndicator,StyleSheet, FlatList,SafeAreaView,ScrollView,View, Text} from 'react-native'
 import Colors from '../../constants/Colors';
 import { Message } from '../../types';
-
+import { API, graphqlOperation,Auth } from 'aws-amplify';
 export type ChatMessageProps = {
     message: Message;
 }
@@ -11,8 +11,16 @@ export type ChatMessageProps = {
 
 const ChatMessage = (props:ChatMessageProps) =>{
     const {message} = props;
+    const [MYuser,setMYuser] = useState(null);
+    useEffect(() => {
+        const fetchUser=async()=>{
+          const  userInfo = await Auth.currentAuthenticatedUser();    
+          setMYuser(userInfo.attributes.sub);
+      }
+      fetchUser();
+      }, [])
     const isMyMSG=()=>{
-        return message.user.id === 'u1';
+        return message.userID === MYuser;
     }
     return(
         <View style={styles.container}>

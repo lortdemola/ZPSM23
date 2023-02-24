@@ -267,6 +267,16 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
 export type ModelSubscriptionTodoFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -1148,16 +1158,17 @@ export type ChatRoomUsersByChatRoomIDQuery = {
   } | null,
 };
 
-export type MessagesByChatRoomIDQueryVariables = {
+export type MessagesByChatRoomIDAndCreatedAtQueryVariables = {
   chatRoomID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelMessageFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type MessagesByChatRoomIDQuery = {
-  messagesByChatRoomID?:  {
+export type MessagesByChatRoomIDAndCreatedAtQuery = {
+  messagesByChatRoomIDAndCreatedAt?:  {
     __typename: "ModelMessageConnection",
     items:  Array< {
       __typename: "Message",

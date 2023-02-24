@@ -306,16 +306,18 @@ export const chatRoomUsersByChatRoomID = /* GraphQL */ `
     }
   }
 `;
-export const messagesByChatRoomID = /* GraphQL */ `
-  query MessagesByChatRoomID(
+export const messagesByChatRoomIDAndCreatedAt = /* GraphQL */ `
+  query MessagesByChatRoomIDAndCreatedAt(
     $chatRoomID: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelMessageFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    messagesByChatRoomID(
+    messagesByChatRoomIDAndCreatedAt(
       chatRoomID: $chatRoomID
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
