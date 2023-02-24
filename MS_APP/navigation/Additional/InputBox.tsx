@@ -5,14 +5,39 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import Icon3 from 'react-native-vector-icons/Entypo';
 import Colors from '../../constants/Colors';
-
-const InputBox =()=>{
-
+import { API, graphqlOperation,Auth } from 'aws-amplify';
+import { createMessage } from '../../src/graphql/mutations';
+const InputBox =(props)=>{
+    const {chatRoomID} = props;
     const [message,setmessage] = useState('');
+    const [MYuser,setMYuser] = useState(null);
+    useEffect(() => {
+      const fetchUser=async()=>{
+        const  userInfo = await Auth.currentAuthenticatedUser();    
+        setMYuser(userInfo.attributes.sub);
+    }
+    fetchUser();
+    }, [])
+    
     const onMicPress=()=>{
         console.warn('onMicPress');
     }
-    const onSendPress=()=>{
+    const onSendPress=async()=>{
+        try{
+            const userData = await API.graphql(graphqlOperation(
+                createMessage,
+                {
+                    input:{
+                        content:message,
+                        userID: MYuser,
+                        chatRoomID
+                    }
+                }
+                ));
+                
+        }catch (error){
+            console.log(error);
+        }
         setmessage('');
     }
     const onPress = ()=>{

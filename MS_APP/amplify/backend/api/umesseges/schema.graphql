@@ -20,5 +20,15 @@ type ChatRoomUser
 type ChatRoom @model {
   id: ID!
   chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "bychatRoom" , fields:["id"])
+  messages: [Message]  @hasMany(indexName: "bychatRoom" , fields:["id"])
+}
+type Message @model {
+  id: ID!
+  createdAt:String!
+  content: String!
+  userID: ID! 
+  chatRoomID: ID! @index(name: "bychatRoom") 
+  user: Todo @hasOne(fields: ["userID"])
+  chatRoom: ChatRoom @hasOne(fields: ["chatRoomID"])
 }
 

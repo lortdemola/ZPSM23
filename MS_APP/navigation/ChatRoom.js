@@ -5,6 +5,8 @@ import ChatRoomsData from '../data/Chats';
 import  ChatMessage  from './Additional/ChatMessage';
 import galaxy from '../constants/icons/galaxy.jpg'
 import InputBox from './Additional/InputBox';
+import { API, graphqlOperation,Auth } from 'aws-amplify';
+
 
 
 const ChatRoomScreen = ()=>{
@@ -18,7 +20,7 @@ const ChatRoomScreen = ()=>{
             renderItem={({item})=><ChatMessage message={item}/>}
             inverted
             />
-            <InputBox/>
+            <InputBox chatRoomID={route.params.id}/>
         </ImageBackground>
          
         
