@@ -25,7 +25,7 @@ const ChatMessage = (props:ChatMessageProps) =>{
     return(
         <View style={styles.container}>
             <View style={[styles.box,{
-                backgroundColor: isMyMSG() ? '#dcf8c5' :'#e5e5e5',
+                backgroundColor: isMyMSG() ? '#FF84FE' :'#84CEFF',
                 marginLeft:isMyMSG() ? 50 :0,
                 marginRight:isMyMSG() ? 0 :50,
             }
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
         
     },
     boxI:{
-        backgroundColor:'#e5e5e5',
         borderRadius: 5,
         marginRight:50,
         padding:10
@@ -69,6 +68,7 @@ const styles = StyleSheet.create({
     Content:{
        
         fontSize:13,
+        color:"black"
         
         
     },

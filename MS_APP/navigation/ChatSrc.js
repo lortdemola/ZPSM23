@@ -29,7 +29,50 @@ const Conn = ({ navigation }) => {
         }
         fetchChats();
      },[]) 
-    
+     useEffect(() => {
+        const subs = API.graphql(graphqlOperation(onUpdateChatRoom)).subscribe({
+            next:async (data)=>{
+                const newMSG =data.value.data.onUpdateChatRoom;
+                if(chatRooms == null){
+                    try {
+                        const  userInfo = await Auth.currentAuthenticatedUser();
+                            
+                        
+                        const userData = await API.graphql(graphqlOperation(
+                        getTodo,
+                        {id:userInfo.attributes.sub}
+                        ));
+                        userData.data.getTodo.chatRoomUser.item
+                        setchatRooms(userData.data.getTodo.chatRoomUser.items);
+                    
+                        } catch (error) {
+                            console.warn(error);
+                        }
+                }else{
+                chatRooms.forEach(async element => {
+                    
+                    if(element.chatRoom.id ===newMSG.lastMessage.chatRoom.id){
+                        try {
+                            const  userInfo = await Auth.currentAuthenticatedUser();
+                                
+                            
+                            const userData = await API.graphql(graphqlOperation(
+                            getTodo,
+                            {id:userInfo.attributes.sub}
+                            ));
+                            userData.data.getTodo.chatRoomUser.item
+                            setchatRooms(userData.data.getTodo.chatRoomUser.items);
+                        
+                            } catch (error) {
+                                console.warn(error);
+                            }
+                    }
+                    
+                });}
+            }
+        });
+        return ()=>subs.unsubscribe();
+      }, [])
     return (
         <View style={styles.container} >
             <FlatList 
@@ -48,8 +91,8 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         justifyContent:'center',
-        alignContent:"center"
-        
+        alignContent: 'center',
+        backgroundColor:'#7745F0',
         
     },
     });

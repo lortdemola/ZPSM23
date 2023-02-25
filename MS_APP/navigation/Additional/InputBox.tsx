@@ -8,9 +8,11 @@ import Colors from '../../constants/Colors';
 import { API, graphqlOperation,Auth } from 'aws-amplify';
 import { createMessage } from '../../src/graphql/mutations';
 import { updateChatRoom } from '../../src/graphql/mutations';
+import Voice from '@react-native-voice/voice';
 const InputBox =(props)=>{
     const {chatRoomID} = props;
     const [message,setmessage] = useState('');
+    const [started,setstarted] = useState(false);
     const [MYuser,setMYuser] = useState(null);
     useEffect(() => {
       const fetchUser=async()=>{
@@ -35,8 +37,30 @@ const InputBox =(props)=>{
         }
         
     }
-    const onMicPress=()=>{
-        console.warn('onMicPress');
+    useEffect(()=>{
+        Voice.onSpeechError = onSpeechError;
+        Voice.onSpeechResults = onSpeechResults;
+        return()=>{
+            Voice.destroy().then(Voice.removeAllListeners);
+        }
+    },[])
+    const onSpeechResults=(result)=>{
+        setmessage(result.value[0]);
+        
+    }
+    const onSpeechError=(error)=>{
+        
+        console.warn(error);
+        
+    }
+    const onMicPressON=async()=>{
+         await Voice.start('en-US');
+        setstarted(true); 
+        
+    }
+    const onMicPressOFF=async()=>{
+        await Voice.stop();
+        setstarted(false);
     }
     const onSendPress=async()=>{
         try{
@@ -59,7 +83,12 @@ const InputBox =(props)=>{
     }
     const onPress = ()=>{
         if(!message){
-            onMicPress();
+            if(!started){
+                onMicPressON();
+            }else{
+                onMicPressOFF();
+            }
+            
         }else{
             onSendPress();
         }
@@ -67,19 +96,19 @@ const InputBox =(props)=>{
     return(
         <View style={styles.container}>
             <View style={styles.containerIN}>
-            <Icon name="smile-o" size={24} color="grey"/>
+            
             <TextInput style={styles.textinput} 
             multiline 
             numberOfLines={1}
             value={message}
             placeholder={"Type a message"}
             onChangeText={setmessage}/>
-            <Icon3 name="attachment" size={24} color="grey" style={styles.icon}/>
-            {!message &&<Icon name="camera" size={24} color="grey" style={styles.icon}/>}
+            
+            
             </View>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.containerBTN}>
-                    {!message ?<Icon name="microphone" size={28} color="white"/>:<Icon2 name="send" size={24} color="white"/>}
+                    {!message ? started ?<Icon name="microphone" size={28} color="red"/>:<Icon name="microphone" size={28} color="white"/>:<Icon2 name="send" size={24} color="white"/>}
                 </View>
             </TouchableOpacity>
         </View>
@@ -93,7 +122,7 @@ const styles = StyleSheet.create({
     },
     containerIN:{
         flexDirection:'row',
-        backgroundColor: 'white',
+        backgroundColor: Colors.light.tint,
         paddingHorizontal:10,
         borderRadius:25,
         marginRight:10,
@@ -113,6 +142,7 @@ const styles = StyleSheet.create({
         
     },
     textinput:{
+        color:"white",
         flex:1,
         marginHorizontal:10,
         

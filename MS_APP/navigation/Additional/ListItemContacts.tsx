@@ -122,10 +122,14 @@ const ListItemContacts=( props:chatlistprops)=>{
 const styles = StyleSheet.create({
     container:{
         flexDirection:'row',
-        width:"100%",
+        width:"97%",
         justifyContent:'space-between',
         padding: 10,
-        flex:1
+        backgroundColor:'white',
+        margin:6,
+        borderRadius:20,
+        elevation:10,
+        flex:1,
         
     },
     midcontainer:{

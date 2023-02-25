@@ -3,7 +3,7 @@ import React, { useEffect, useState  } from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Image} from 'react-native';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Device from './DEVICE';
+import Stastus from './Stastus';
 import Conn from './ChatSrc';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -33,8 +33,8 @@ const BTabNav = () => {
     >
         
         <Tab.Screen name="Chats" component={Conn}/>
-        <Tab.Screen name="Status" component={Device}  />
-        <Tab.Screen name="Calls" component={Conn}/>
+        <Tab.Screen name="Status" component={Stastus}  />
+        
         
     </Tab.Navigator>
     );

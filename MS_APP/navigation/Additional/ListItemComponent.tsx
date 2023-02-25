@@ -21,6 +21,7 @@ const ListItemComponent=( props:chatlistprops)=>{
                 
             if(chatRoom.chatRoomUsers.items[0].user.id == userInfo.attributes.sub ){
                 setuserA(chatRoom.chatRoomUsers.items[1].user);
+               
             }else{
                 setuserA(chatRoom.chatRoomUsers.items[0].user);
             }
@@ -37,31 +38,52 @@ const ListItemComponent=( props:chatlistprops)=>{
     const onClick = ()=>{
         navigation.navigate('Chatroom', {id:chatRoom.id,name:user.name});
     }
-    return(
+    if(chatRoom.lastMessage == null){
+        return(
         <TouchableWithoutFeedback onPress={onClick}>
         <View style={styles.container}>
             <View style={styles.leftcontainer}>
                 <Image source={{uri: user.imageUri}} style={styles.avatar}/>
                 <View style={styles.midcontainer}>
                     <Text style={styles.Usname}>{user.name}</Text>
-                    <Text style={styles.LMessage}>
+                   
+                </View>
+            </View>
+        </View>
+        </TouchableWithoutFeedback>)
+    }
+    else
+    {
+        return(
+        <TouchableWithoutFeedback onPress={onClick}>
+        <View style={styles.container}>
+            <View style={styles.leftcontainer}>
+                <Image source={{uri: user.imageUri}} style={styles.avatar}/>
+                <View style={styles.midcontainer}>
+                    <Text style={styles.Usname}>{user.name}</Text>
+                    <Text style={styles.LMessage} >
                     {chatRoom.lastMessage 
-                        ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
+                        ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content.length < 10
+                            ? `${chatRoom.lastMessage.content}`
+                            : `${chatRoom.lastMessage.content.substring(0, 18)}...`}`
                         :""}</Text>
                 </View>
             </View>
             <Text style={styles.time}>{ chatRoom.lastMessage && moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}</Text>
         </View>
         </TouchableWithoutFeedback>
-    )
+    )}
 }
 const styles = StyleSheet.create({
     container:{
         flexDirection:'row',
-        width:"100%",
+        width:"97%",
         justifyContent:'space-between',
         padding: 10,
-        flex:1
+        backgroundColor:'white',
+        margin:6,
+        borderRadius:20,
+        flex:1,
         
     },
     midcontainer:{
@@ -85,6 +107,7 @@ const styles = StyleSheet.create({
 
         fontSize:16,
         color:'grey',
+     
         
     },
     time:{
