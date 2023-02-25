@@ -3,6 +3,7 @@ import {ActivityIndicator,StyleSheet, FlatList,SafeAreaView,ScrollView,View, Tex
 import ListItemComponent from './Additional/ListItemComponent';
 import FlotBTN from './Additional/FlotBTN';
 import { getTodo } from './Additional/queries';
+import { onUpdateChatRoom } from '../src/graphql/subscriptions';
 
 import { API, graphqlOperation,Auth } from 'aws-amplify';
 import { set } from 'react-native-reanimated';

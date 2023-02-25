@@ -31,11 +31,7 @@ const BTabNav = () => {
         
     }}
     >
-        <Tab.Screen name="Camera" component={Device}  options={{
-            tabBarIcon:({color}) => <Icon name="camera-retro" size={22} color={Colors.light.backGround} />,
-            tabBarLabel: () =>null,
-
-        }}/>
+        
         <Tab.Screen name="Chats" component={Conn}/>
         <Tab.Screen name="Status" component={Device}  />
         <Tab.Screen name="Calls" component={Conn}/>
