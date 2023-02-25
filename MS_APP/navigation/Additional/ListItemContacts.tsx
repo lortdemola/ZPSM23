@@ -48,7 +48,11 @@ const ListItemContacts=( props:chatlistprops)=>{
         try {
             
             for (let index = 0; index < chatRooms.length; index++) {
+                if(chatRooms[index].chatRoom == null){
+                    break;
+                }
                 const element = chatRooms[index].chatRoom.chatRoomUsers.items;
+                
                 for (let ind = 0; ind< element.length; ind++) {
                     if(user.id == element[ind].user.id){
                         tr = true;

@@ -7,6 +7,7 @@ import Icon3 from 'react-native-vector-icons/Entypo';
 import Colors from '../../constants/Colors';
 import { API, graphqlOperation,Auth } from 'aws-amplify';
 import { createMessage } from '../../src/graphql/mutations';
+import { updateChatRoom } from '../../src/graphql/mutations';
 const InputBox =(props)=>{
     const {chatRoomID} = props;
     const [message,setmessage] = useState('');
@@ -18,13 +19,28 @@ const InputBox =(props)=>{
     }
     fetchUser();
     }, [])
-    
+    const updatechatRooom=async(messageid:string )=>{
+        try {
+            await API.graphql(graphqlOperation(
+                updateChatRoom,
+                {
+                    input:{
+                        id:chatRoomID,
+                        lastMessageID:messageid
+                    }
+                }
+                ));
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
     const onMicPress=()=>{
         console.warn('onMicPress');
     }
     const onSendPress=async()=>{
         try{
-            const userData = await API.graphql(graphqlOperation(
+            const createdMessageData = await API.graphql(graphqlOperation(
                 createMessage,
                 {
                     input:{
@@ -34,6 +50,7 @@ const InputBox =(props)=>{
                     }
                 }
                 ));
+                await updatechatRooom(createdMessageData.data.createMessage.id);
                 
         }catch (error){
             console.log(error);

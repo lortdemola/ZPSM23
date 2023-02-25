@@ -24,7 +24,7 @@ const ListItemComponent=( props:chatlistprops)=>{
             }else{
                 setuserA(chatRoom.chatRoomUsers.items[0].user);
             }
-        
+           
             } catch (error) {
                 console.warn(error);
             }
@@ -44,7 +44,10 @@ const ListItemComponent=( props:chatlistprops)=>{
                 <Image source={{uri: user.imageUri}} style={styles.avatar}/>
                 <View style={styles.midcontainer}>
                     <Text style={styles.Usname}>{user.name}</Text>
-                    <Text style={styles.LMessage}>{chatRoom.lastMessage ? chatRoom.lastMessage.content:""}</Text>
+                    <Text style={styles.LMessage}>
+                    {chatRoom.lastMessage 
+                        ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
+                        :""}</Text>
                 </View>
             </View>
             <Text style={styles.time}>{ chatRoom.lastMessage && moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}</Text>

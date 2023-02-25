@@ -21,6 +21,8 @@ type ChatRoom @model {
   id: ID!
   chatRoomUsers: [ChatRoomUser] @hasMany(indexName: "bychatRoom" , fields:["id"])
   messages: [Message]  @hasMany(indexName: "bychatRoom" , fields:["id"])
+  lastMessageID:ID
+  lastMessage: Message @hasOne(fields: ["lastMessageID"])
 }
 type Message @model {
   id: ID!

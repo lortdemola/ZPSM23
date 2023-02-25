@@ -24,6 +24,16 @@ export const getTodo = /* GraphQL */ `
                 }
               }
             }
+            lastMessage {
+                chatRoomID
+                content
+                createdAt
+                id
+                user {
+                    id
+                    name
+                }
+            }
           }
         }
         nextToken

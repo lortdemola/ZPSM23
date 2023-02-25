@@ -6,6 +6,7 @@ import galaxy from '../constants/icons/galaxy.jpg'
 import InputBox from './Additional/InputBox';
 import { API, graphqlOperation,Auth } from 'aws-amplify';
 import { messagesByChatRoomIDAndCreatedAt } from '../src/graphql/queries';
+import { onCreateMessage } from '../src/graphql/subscriptions';
 
 
 
@@ -28,6 +29,20 @@ const ChatRoomScreen = ()=>{
       }
       fetchUser();
       }, [])
+
+      useEffect(() => {
+        const subs = API.graphql(graphqlOperation(onCreateMessage)).subscribe({
+            next:(data)=>{
+                const newMSG =data.value.data.onCreateMessage;
+                if(newMSG.chatRoomID !== route.params.id){
+                    return;
+                }
+                setmessages(messages => [newMSG,...messages]);
+            }
+        });
+        return ()=>subs.unsubscribe();
+      }, [])
+
     return(
         <ImageBackground source={galaxy} style={{height:'100%'}}>
             <FlatList 
