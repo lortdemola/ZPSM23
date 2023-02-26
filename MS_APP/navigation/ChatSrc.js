@@ -60,7 +60,7 @@ const Conn = ({ navigation }) => {
                             getTodo,
                             {id:userInfo.attributes.sub}
                             ));
-                            userData.data.getTodo.chatRoomUser.item
+                            
                             setchatRooms(userData.data.getTodo.chatRoomUser.items);
                         
                             } catch (error) {
