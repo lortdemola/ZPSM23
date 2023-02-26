@@ -50,6 +50,7 @@ const randomIMG =[
   'https://loremflickr.com/320/240'
 ]
 const App = () => {
+  
   const isDarkMode = useColorScheme() === 'dark';
 
  const getrandomIMG =()=>{
@@ -59,7 +60,7 @@ const App = () => {
   const stack = createStackNavigator();
 
   useEffect(()=>{ 
-    SplashScreen.hide();
+    
     const fetchUser = async()=>{
       
        const  userInfo = await Auth.currentAuthenticatedUser({bypassCache:true});
@@ -89,6 +90,7 @@ const App = () => {
        }
     }
     fetchUser();
+   
   },[])
  
 
