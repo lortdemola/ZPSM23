@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "nonspace",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-nonspace-dev-90146-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/160fe35fb0275993c6d6290259a9e70a9f540b4a"
+}

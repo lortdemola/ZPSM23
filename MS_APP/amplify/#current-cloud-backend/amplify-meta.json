@@ -1,0 +1,83 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nonspace-dev-90146-authRole",
+      "UnauthRoleArn": "arn:aws:iam::979870058500:role/amplify-nonspace-dev-90146-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::979870058500:role/amplify-nonspace-dev-90146-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-nonspace-dev-90146-deployment",
+      "UnauthRoleName": "amplify-nonspace-dev-90146-unauthRole",
+      "StackName": "amplify-nonspace-dev-90146",
+      "StackId": "arn:aws:cloudformation:eu-central-1:979870058500:stack/amplify-nonspace-dev-90146/fd0a84e0-b674-11ed-ba6f-0624f169e710",
+      "AmplifyAppId": "d3l1e7np9s5se6"
+    }
+  },
+  "api": {
+    "nonspace": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "7gr435itq5hq5drauewd7sw33u",
+        "GraphQLAPIEndpointOutput": "https://hb5s63olxjcw7owb5udr4kwcei.appsync-api.eu-central-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-bi3sjowmvvdopmguzoznfidgki"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-nonspace-dev-90146-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apinonspace"
+      },
+      "lastPushTimeStamp": "2023-02-27T08:17:45.958Z",
+      "lastPushDirHash": "0D2OY4Y3kfFM6D9Y6LkFBUzv988="
+    }
+  },
+  "auth": {
+    "nonspace622efab8": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-nonspace-dev-90146-deployment/amplify-cfn-templates/auth/nonspace622efab8-cloudformation-template.json",
+        "logicalId": "authnonspace622efab8"
+      },
+      "lastPushTimeStamp": "2023-02-27T08:17:41.658Z",
+      "output": {
+        "UserPoolId": "eu-central-1_EWi8Ds9ak",
+        "AppClientIDWeb": "5jev08bktqlf3e7afahg6vfpii",
+        "AppClientID": "150ej0v21e6ie0rg7gd1r1nf77",
+        "IdentityPoolId": "eu-central-1:d95dcf5f-cb08-473e-af89-8e851cd51e23",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-central-1:979870058500:userpool/eu-central-1_EWi8Ds9ak",
+        "IdentityPoolName": "nonspace622efab8_identitypool_622efab8__dev",
+        "UserPoolName": "nonspace622efab8_userpool_622efab8"
+      },
+      "lastPushDirHash": "XyTsgKR5w1nM/8Lk9KHy/ITNI4c="
+    }
+  }
+}

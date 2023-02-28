@@ -1,0 +1,440 @@
+
+type Todo {
+  id: ID!
+  name: String!
+  imageUri: String
+  status: String
+  chatRoomUser(filter: ModelChatRoomUserFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelChatRoomUserConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ChatRoomUser {
+  id: ID!
+  userID: ID!
+  chatRoomID: ID!
+  user: Todo
+  chatRoom: ChatRoom
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ChatRoom {
+  id: ID!
+  chatRoomUsers(filter: ModelChatRoomUserFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelChatRoomUserConnection
+  messages(createdAt: ModelStringKeyConditionInput, filter: ModelMessageFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelMessageConnection
+  lastMessageID: ID
+  lastMessage: Message
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Message {
+  id: ID!
+  createdAt: String!
+  content: String!
+  userID: ID!
+  chatRoomID: ID!
+  user: Todo
+  chatRoom: ChatRoom
+  updatedAt: AWSDateTime!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelTodoConnection {
+  items: [Todo]!
+  nextToken: String
+}
+
+input ModelTodoFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  imageUri: ModelStringInput
+  status: ModelStringInput
+  and: [ModelTodoFilterInput]
+  or: [ModelTodoFilterInput]
+  not: ModelTodoFilterInput
+}
+
+type Query {
+  getTodo(id: ID!): Todo
+  listTodos(filter: ModelTodoFilterInput, limit: Int, nextToken: String): ModelTodoConnection
+  getChatRoomUser(id: ID!): ChatRoomUser
+  listChatRoomUsers(filter: ModelChatRoomUserFilterInput, limit: Int, nextToken: String): ModelChatRoomUserConnection
+  getChatRoom(id: ID!): ChatRoom
+  listChatRooms(filter: ModelChatRoomFilterInput, limit: Int, nextToken: String): ModelChatRoomConnection
+  getMessage(id: ID!): Message
+  listMessages(filter: ModelMessageFilterInput, limit: Int, nextToken: String): ModelMessageConnection
+  chatRoomUsersByUserID(userID: ID!, sortDirection: ModelSortDirection, filter: ModelChatRoomUserFilterInput, limit: Int, nextToken: String): ModelChatRoomUserConnection
+  chatRoomUsersByChatRoomID(chatRoomID: ID!, sortDirection: ModelSortDirection, filter: ModelChatRoomUserFilterInput, limit: Int, nextToken: String): ModelChatRoomUserConnection
+  messagesByChatRoomIDAndCreatedAt(chatRoomID: ID!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelMessageFilterInput, limit: Int, nextToken: String): ModelMessageConnection
+}
+
+input ModelTodoConditionInput {
+  name: ModelStringInput
+  imageUri: ModelStringInput
+  status: ModelStringInput
+  and: [ModelTodoConditionInput]
+  or: [ModelTodoConditionInput]
+  not: ModelTodoConditionInput
+}
+
+input CreateTodoInput {
+  id: ID
+  name: String!
+  imageUri: String
+  status: String
+}
+
+input UpdateTodoInput {
+  id: ID!
+  name: String
+  imageUri: String
+  status: String
+}
+
+input DeleteTodoInput {
+  id: ID!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!, condition: ModelTodoConditionInput): Todo
+  updateTodo(input: UpdateTodoInput!, condition: ModelTodoConditionInput): Todo
+  deleteTodo(input: DeleteTodoInput!, condition: ModelTodoConditionInput): Todo
+  createChatRoomUser(input: CreateChatRoomUserInput!, condition: ModelChatRoomUserConditionInput): ChatRoomUser
+  updateChatRoomUser(input: UpdateChatRoomUserInput!, condition: ModelChatRoomUserConditionInput): ChatRoomUser
+  deleteChatRoomUser(input: DeleteChatRoomUserInput!, condition: ModelChatRoomUserConditionInput): ChatRoomUser
+  createChatRoom(input: CreateChatRoomInput!, condition: ModelChatRoomConditionInput): ChatRoom
+  updateChatRoom(input: UpdateChatRoomInput!, condition: ModelChatRoomConditionInput): ChatRoom
+  deleteChatRoom(input: DeleteChatRoomInput!, condition: ModelChatRoomConditionInput): ChatRoom
+  createMessage(input: CreateMessageInput!, condition: ModelMessageConditionInput): Message
+  updateMessage(input: UpdateMessageInput!, condition: ModelMessageConditionInput): Message
+  deleteMessage(input: DeleteMessageInput!, condition: ModelMessageConditionInput): Message
+}
+
+input ModelSubscriptionTodoFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  imageUri: ModelSubscriptionStringInput
+  status: ModelSubscriptionStringInput
+  and: [ModelSubscriptionTodoFilterInput]
+  or: [ModelSubscriptionTodoFilterInput]
+}
+
+type Subscription {
+  onCreateTodo(filter: ModelSubscriptionTodoFilterInput): Todo @aws_subscribe(mutations: ["createTodo"])
+  onUpdateTodo(filter: ModelSubscriptionTodoFilterInput): Todo @aws_subscribe(mutations: ["updateTodo"])
+  onDeleteTodo(filter: ModelSubscriptionTodoFilterInput): Todo @aws_subscribe(mutations: ["deleteTodo"])
+  onCreateChatRoomUser(filter: ModelSubscriptionChatRoomUserFilterInput): ChatRoomUser @aws_subscribe(mutations: ["createChatRoomUser"])
+  onUpdateChatRoomUser(filter: ModelSubscriptionChatRoomUserFilterInput): ChatRoomUser @aws_subscribe(mutations: ["updateChatRoomUser"])
+  onDeleteChatRoomUser(filter: ModelSubscriptionChatRoomUserFilterInput): ChatRoomUser @aws_subscribe(mutations: ["deleteChatRoomUser"])
+  onCreateChatRoom(filter: ModelSubscriptionChatRoomFilterInput): ChatRoom @aws_subscribe(mutations: ["createChatRoom"])
+  onUpdateChatRoom(filter: ModelSubscriptionChatRoomFilterInput): ChatRoom @aws_subscribe(mutations: ["updateChatRoom"])
+  onDeleteChatRoom(filter: ModelSubscriptionChatRoomFilterInput): ChatRoom @aws_subscribe(mutations: ["deleteChatRoom"])
+  onCreateMessage(filter: ModelSubscriptionMessageFilterInput): Message @aws_subscribe(mutations: ["createMessage"])
+  onUpdateMessage(filter: ModelSubscriptionMessageFilterInput): Message @aws_subscribe(mutations: ["updateMessage"])
+  onDeleteMessage(filter: ModelSubscriptionMessageFilterInput): Message @aws_subscribe(mutations: ["deleteMessage"])
+}
+
+type ModelChatRoomUserConnection {
+  items: [ChatRoomUser]!
+  nextToken: String
+}
+
+input ModelChatRoomUserFilterInput {
+  id: ModelIDInput
+  userID: ModelIDInput
+  chatRoomID: ModelIDInput
+  and: [ModelChatRoomUserFilterInput]
+  or: [ModelChatRoomUserFilterInput]
+  not: ModelChatRoomUserFilterInput
+}
+
+input ModelChatRoomUserConditionInput {
+  userID: ModelIDInput
+  chatRoomID: ModelIDInput
+  and: [ModelChatRoomUserConditionInput]
+  or: [ModelChatRoomUserConditionInput]
+  not: ModelChatRoomUserConditionInput
+}
+
+input CreateChatRoomUserInput {
+  id: ID
+  userID: ID!
+  chatRoomID: ID!
+}
+
+input UpdateChatRoomUserInput {
+  id: ID!
+  userID: ID
+  chatRoomID: ID
+}
+
+input DeleteChatRoomUserInput {
+  id: ID!
+}
+
+input ModelSubscriptionChatRoomUserFilterInput {
+  id: ModelSubscriptionIDInput
+  userID: ModelSubscriptionIDInput
+  chatRoomID: ModelSubscriptionIDInput
+  and: [ModelSubscriptionChatRoomUserFilterInput]
+  or: [ModelSubscriptionChatRoomUserFilterInput]
+}
+
+type ModelChatRoomConnection {
+  items: [ChatRoom]!
+  nextToken: String
+}
+
+input ModelChatRoomFilterInput {
+  id: ModelIDInput
+  lastMessageID: ModelIDInput
+  and: [ModelChatRoomFilterInput]
+  or: [ModelChatRoomFilterInput]
+  not: ModelChatRoomFilterInput
+}
+
+input ModelChatRoomConditionInput {
+  lastMessageID: ModelIDInput
+  and: [ModelChatRoomConditionInput]
+  or: [ModelChatRoomConditionInput]
+  not: ModelChatRoomConditionInput
+}
+
+input CreateChatRoomInput {
+  id: ID
+  lastMessageID: ID
+}
+
+input UpdateChatRoomInput {
+  id: ID!
+  lastMessageID: ID
+}
+
+input DeleteChatRoomInput {
+  id: ID!
+}
+
+input ModelSubscriptionChatRoomFilterInput {
+  id: ModelSubscriptionIDInput
+  lastMessageID: ModelSubscriptionIDInput
+  and: [ModelSubscriptionChatRoomFilterInput]
+  or: [ModelSubscriptionChatRoomFilterInput]
+}
+
+type ModelMessageConnection {
+  items: [Message]!
+  nextToken: String
+}
+
+input ModelMessageFilterInput {
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  content: ModelStringInput
+  userID: ModelIDInput
+  chatRoomID: ModelIDInput
+  and: [ModelMessageFilterInput]
+  or: [ModelMessageFilterInput]
+  not: ModelMessageFilterInput
+}
+
+input ModelMessageConditionInput {
+  createdAt: ModelStringInput
+  content: ModelStringInput
+  userID: ModelIDInput
+  chatRoomID: ModelIDInput
+  and: [ModelMessageConditionInput]
+  or: [ModelMessageConditionInput]
+  not: ModelMessageConditionInput
+}
+
+input CreateMessageInput {
+  id: ID
+  createdAt: String
+  content: String!
+  userID: ID!
+  chatRoomID: ID!
+}
+
+input UpdateMessageInput {
+  id: ID!
+  createdAt: String
+  content: String
+  userID: ID
+  chatRoomID: ID
+}
+
+input DeleteMessageInput {
+  id: ID!
+}
+
+input ModelSubscriptionMessageFilterInput {
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  content: ModelSubscriptionStringInput
+  userID: ModelSubscriptionIDInput
+  chatRoomID: ModelSubscriptionIDInput
+  and: [ModelSubscriptionMessageFilterInput]
+  or: [ModelSubscriptionMessageFilterInput]
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}
+
