@@ -43,7 +43,7 @@ import { getTodo } from './src/graphql/queries';
 import { createTodo } from './src/graphql/mutations';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import SplashScreen from 'react-native-splash-screen';
+
 const randomIMG =[
   'https://loremflickr.com/320/240/dog',
   'https://loremflickr.com/320/240/brazil,rio',

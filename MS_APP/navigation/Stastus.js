@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     input:{
         backgroundColor:'white',
         borderRadius:30,
-        width:'250%', 
+        width:'230%', 
         padding:5
     },
     btn:{

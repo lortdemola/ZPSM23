@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "umesseges",
+  "AppSyncApiName": "nonspace",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false
 }
